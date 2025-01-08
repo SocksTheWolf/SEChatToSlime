@@ -16,7 +16,7 @@ Output zip file is widget.html, use that as your browser source (see slime2 OBS 
 5. Wait for it to process
 6. Download the files. Your output html can be set up like a regular slime widget.
 
-### Caveats
+## Caveats
 
 Due to this being a simple automation, there are some things that cannot be dynamically resolved.
 This isn't always because of this tool, but because one platform had features the other doesn't (or will not).
