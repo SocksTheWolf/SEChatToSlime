@@ -36,7 +36,7 @@ Features that slime2 has but StreamElements never had functionality for.
 If you want something in this section, you'll need to either have a widget that had support for this functionality anyways, or make modifications yourself.
 
 * Partner Cheeremotes do not display the image reliably.
-* Displaying pronouns is supported by the tool, but unless your widget handles that data already, it won't display. SE never had this feature.
+* Displaying pronouns is supported by this tool, but unless your widget handles that data already, it won't display. SE never had this feature.
 
 ### Limitations of this tool
 Most points in here are things I can fix in the future, I'll mention if I am planning on it.
