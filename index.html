@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>StreamElements Chat Widget converter</title>
+<title>StreamElements Chat Widget Converter</title>
 <script src="jszip.min.js"></script>
 <script src="FileSaver.js"></script>
 <script src="sebridge.js"></script>
@@ -13,13 +13,14 @@
 </head>
 
 <body>
-<div>Data Settings: <input type="file" id="settings" accept="text/*" />
-Files: <input type="file" id="files" multiple accept="text/*" disabled="true" /></div>
+<h2>For instructions on how to use this page, see <a href="https://github.com/SocksTheWolf/SEChatToSlime">the project discription here</a></h2>
+<div><label for="settings">Data Settings</label>: <input type="file" id="settings" accept="text/*" />
+<br /><br /><label for="files">Files</label>: <input type="file" id="files" multiple accept="text/*" disabled="true" /></div>
 <br />
 Log:
 <div id="log"></div>
 <br /><br /><hr /><br />
-<button id="blob" class="btn btn-primary" disabled="true">click to download</button>
+<button id="blob" disabled="true">click to download converted widget</button>
 <script type="application/javascript" src="convert.js"></script>
 </body>
 </html>
