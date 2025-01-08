@@ -41,6 +41,10 @@ const HTMLBase = `
 </html>
 `;
 
+function setButtonDisable(id, status) {
+	document.getElementById(id).disabled = status;
+}
+
 function pushToLog(line) {
 	const newLog = document.createElement("p");
 	newLog.innerHTML = line;
@@ -56,8 +60,8 @@ function settingsLoad(filename, data) {
 		const configData = `const seJsonConfig = ${data};`;
 		output.file("seconfig.js", configData);
 		// Toggle button usage
-		document.getElementById("files").disabled=false;
-		document.getElementById("settings").disabled=true;
+		setButtonDisable("filesBtn", false);
+		setButtonDisable("settingsBtn", true);
 		
 		pushToLog("Settings parsed and ready");
 	}
@@ -102,7 +106,7 @@ function handleTranslation(fileName, fileInternals) {
 	output.file(fileName, applySettings(fileData));
 	
 	if (Object.keys(output.files).length >= PROJECT_FILES_NEEDED) {
-		document.getElementById("blob").disabled = false;
+		setButtonDisable("blob", false);
 		pushToLog("<b>Download ready!</b>");
 	}
 }

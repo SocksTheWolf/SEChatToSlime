@@ -2,6 +2,9 @@
 <html>
 <head>
 <title>StreamElements Chat Widget Converter</title>
+<meta name="author" content="SocksTheWolf" />
+<meta name="description" content="A StreamElements chat widget converter script for streamers!" />
+<meta name="keywords" content="streamelements, slime2, chat widget, widget, chat, twitch, twitch chat, obs overlay" />
 <script src="jszip.min.js"></script>
 <script src="FileSaver.js"></script>
 <script src="sebridge.js"></script>
@@ -9,18 +12,48 @@
 #log p {
 	margin-left: 10px;
 }
+li {
+	line-height: 30px;
+	max-width: 50%;
+}
+#blob {
+	margin-left: 20px;
+}
+#settings, #files {
+	display: none;
+}
+.small {
+	font-size: 14px;
+	padding-left: 50px;
+	color: DimGray;
+}
+.credit {
+	position: relative;
+	left: -15px;
+	top: -15px;
+	
+}
 </style>
 </head>
 
 <body>
-<h2>For instructions on how to use this page, see <a href="https://github.com/SocksTheWolf/SEChatToSlime">the project discription here</a></h2>
-<div><label for="settings">Data Settings</label>: <input type="file" id="settings" accept="text/*" />
-<br /><br /><label for="files">Files</label>: <input type="file" id="files" multiple accept="text/*" disabled="true" /></div>
-<br />
-Log:
+<h2>StreamElements Chat Widget Converter</h2>
+<span class="small credit">By <a href="https://socksthewolf.com">SocksTheWolf</a> - <a href="https://twitch.tv/socksthewolf">Twitch</a> - <a href="https://github.com/SocksTheWolf/SEChatToSlime">GitHub Project</a></span>
+<p>Follow the steps below and you'll be able to have your SE Chat Widget work with a <a href="https://slime2.stream/" target="_blank">slime2 instance</a> instead! No more StreamElements requirements!! Everything is processed locally on your computer, for safety!</p>
+<ol>
+<li>Go into StreamElements dashboard and download the "Data", "CSS", "JS" and "HTML" sections via the widget editor for your chat widget. Save each file with their appropriate file extension <span class="small"><b>NOTE:</b> the Data section can be saved as anything, everything else is their section names in lowercase (ex: data in the CSS section would be saved as <code>.css</code>)</span></li>
+<li>Take the file you made from the DATA section and <button for="settings" id="settingsBtn" class="btn" onclick="document.getElementById('settings').click();">Upload the settings here</button></li>
+<li>Upload the files from the HTML, CSS, and JS sections <button for="files" disabled="true" id="filesBtn" class="btn" onclick="document.getElementById('files').click();">Input Widget Files here</button></li>
+<li>Wait until this download button becomes clickable, and then click it! <br /><button id="blob" disabled="true">Download converted widget files</button></li>
+<li>You can now unzip the output file and use it as a OBS browser source!</li>
+</ol>
+
+<br /><hr />
+<h4>Processing Log</h4>
 <div id="log"></div>
-<br /><br /><hr /><br />
-<button id="blob" disabled="true">click to download converted widget</button>
+<br />
+<input type="file" id="settings" accept="text/*" />
+<input type="file" id="files" multiple accept="text/*" />
 <script type="application/javascript" src="convert.js"></script>
 </body>
 </html>
