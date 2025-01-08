@@ -1,6 +1,6 @@
 # StreamElements Chat Widgets to Slime2
 
-This project tries to simply convert existing StreamElements widget files for usage with slime.
+This project tries to simply convert existing StreamElements widget files for usage with [slime](https://slime2.stream/).
 
 ### Overview
 
@@ -12,10 +12,11 @@ This will not convert your existing StreamElements widgets to work with slime se
 ### To use
 
 1. Go into StreamElements dashboard and download the "Data", "CSS", "JS" and "HTML" sections via the widget editor for your chat widget. Save each file with their appropriate file extension (DATA section can be saved as anything, everything else is their section names in lowercase [ex: CSS would be .css])
-2. Upload your "DATA" section file to the `Data Settings` section
-3. Upload your html, css and js files to the `Files` section
-4. Wait for it to process
-5. Download the files. Your output html can be set up like a regular slime widget.
+2. Go to the [project url on this github page](https://socksthewolf.github.io/SEChatToSlime/).
+3. Upload your "DATA" section file to the `Data Settings` section
+4. Upload your html, css and js files to the `Files` section
+5. Wait for it to process
+6. Download the files. Your output html can be set up like a regular slime widget.
 
 ### Special Thanks
 
