@@ -1,3 +1,5 @@
+# StreamElements Chat Widgets to Slime2
+
 This project tries to simply convert existing StreamElements widget files for usage with slime.
 
 ### Overview
