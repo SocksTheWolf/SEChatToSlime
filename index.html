@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>StreamElements Chat Widget converter</title>
+<script src="jszip.min.js"></script>
+<script src="FileSaver.js"></script>
+<script src="sebridge.js"></script>
+<style>
+#log p {
+	margin-left: 10px;
+}
+</style>
+</head>
+
+<body>
+<div>Data Settings: <input type="file" id="settings" accept="text/*" />
+Files: <input type="file" id="files" multiple accept="text/*" disabled="true" /></div>
+<br />
+Log:
+<div id="log"></div>
+<br /><br /><hr /><br />
+<button id="blob" class="btn btn-primary" disabled="true">click to download</button>
+<script type="application/javascript" src="convert.js"></script>
+</body>
+</html>
