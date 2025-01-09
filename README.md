@@ -13,6 +13,7 @@ Output zip file is widget.html, use that as your browser source (see slime2 OBS 
 * Bridged library for handling streamelements API code -> slime2 API code
 * Provides an zip folder with your converted widget code
 * Most (if not all) results require any further code modifications
+* Directly injects existing StreamElements user settings into the widgets
 * Free
 
 ## To use
