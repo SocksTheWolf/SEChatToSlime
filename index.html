@@ -1,77 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>StreamElements Chat Widget Converter</title>
-<meta name="author" content="SocksTheWolf" />
-<meta name="description" content="A StreamElements chat widget converter script for streamers!" />
-<meta name="keywords" content="streamelements, slime2, chat widget, widget, chat, twitch, twitch chat, obs overlay" />
-<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-<script src="jszip.min.js"></script>
-<script src="FileSaver.js"></script>
-<script src="sebridge.js"></script>
-<style>
-#log p {
-	margin-left: 10px;
-	max-width: 30%;
-}
-li {
-	line-height: 30px;
-	max-width: 50%;
-}
-#blob {
-	margin-left: 20px;
-}
-input[type="file"] {
-	display: none;
-}
-.whisper {
-	font-size: 14px;
-	padding-left: 50px;
-	color: DimGray;
-	text-align: center;
-	display: inline-block;
-}
-.bigtag {
-	font-weight: bold;
-	text-transform: uppercase;
-}
-.bigtag:after {
-	content: ": ";
-}
-.credit {
-	position: relative;
-	left: -15px;
-	top: -15px;
-}
-.error {
-	color: red;
-}
-.ready {
-	font-weight: bold;
-	font-size: 25px;
-}
-</style>
+	<title>StreamElements Chat Widget Converter</title>
+	<meta name="author" content="SocksTheWolf" />
+	<meta name="description" content="A StreamElements chat widget converter script for streamers!" />
+	<meta name="keywords" content="streamelements, slime2, chat widget, widget, chat, twitch, twitch chat, obs overlay" />
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+	<!-- Application Requirements and code -->
+	<script src="jszip.min.js"></script>
+	<script src="FileSaver.js"></script>
+	<script src="sebridge.js"></script>
+	<link href="style.css" rel="stylesheet" />
 </head>
 
 <body>
-<h2>StreamElements Chat Widget Converter</h2>
-<span class="whisper credit">By <a href="https://socksthewolf.com">SocksTheWolf</a> - <a href="https://twitch.tv/socksthewolf">Twitch</a> - <a href="https://github.com/SocksTheWolf/SEChatToSlime">GitHub Project</a></span>
-<p>Use the steps below and you'll be able to have your custom StreamElements Chat Widget work with a <a href="https://slime2.stream/" target="_blank">slime2 instance</a> instead! No more StreamElements requirements!! Everything on this site is processed locally on your computer, for safety!</p>
-<p>If you need help, <a href="https://youtu.be/FTSqXM53kjM" target="_blank">a video tutorial is provided here</a>!</p>
-<ol>
-<li>Go into StreamElements dashboard and download the "Data", "CSS", "JS" and "HTML" sections via the widget editor for your chat widget. Save each file with their appropriate file extension!<br /><span class="whisper"><span class="bigtag">note</span>The Data section can be saved as anything, everything else is their section names in lowercase (ex: code in the CSS section would be saved as <code>.css</code>).</span></li>
-<li>Take the file you made from the DATA section and <button for="settings" id="settingsBtn" class="btn" onclick="document.getElementById('settings').click();">Upload the settings here</button></li>
-<li>Upload the files from the HTML, CSS, and JS sections <button for="files" disabled="true" id="filesBtn" class="btn" onclick="document.getElementById('files').click();">Input Widget Files here</button></li>
-<li>Wait until this download button becomes clickable, and then click it! <br /><button id="blob" disabled="true">Download converted widget files</button></li>
-<li>You can now unzip the output file and use it as an <a href="https://forums.slime2.stream/resources/widget-setup.3/">OBS browser source</a>!!<br /><span class="whisper"><span class="bigtag">note</span>You will need a <a href="https://slime2.stream/account" target="_blank">slime2 account key from here</a>!</span></li>
-</ol>
+	<h2>StreamElements Chat Widget Converter</h2>
+	<span class="whisper credit">By <a href="https://socksthewolf.com">SocksTheWolf</a> - <a href="https://twitch.tv/socksthewolf">Twitch</a> - <a href="https://github.com/SocksTheWolf/SEChatToSlime">GitHub Project</a></span>
+	
+	<!-- Introduction -->
+	<div id="intro">
+		<p>Use the steps below and you'll be able to have your custom StreamElements Chat Widget work with a <a href="https://slime2.stream/" target="_blank">slime2 instance</a> instead! No more StreamElements requirements!! Everything on this site is processed locally on your computer, for safety!</p>
+		<p>If you need help, <a href="https://youtu.be/FTSqXM53kjM" target="_blank">a video tutorial is provided here</a>!</p>
+	</div>
+	
+	<!-- Steps -->
+	<ol>
+		<li>Go into StreamElements dashboard and download the "Data", "CSS", "JS" and "HTML" sections via the widget editor for your chat widget. Save each file with their appropriate file extension!<br /><span class="whisper"><span class="bigtag">note</span>The Data section can be saved as anything, everything else is their section names in lowercase (ex: code in the CSS section would be saved as <code>.css</code>).</span></li>
+		<li>Take the file you made from the DATA section and <button for="settings" id="settingsBtn" class="btn" onclick="document.getElementById('settings').click();">Upload the settings here</button></li>
+		<li>Upload the files from the HTML, CSS, and JS sections <button for="files" disabled="true" id="filesBtn" class="btn" onclick="document.getElementById('files').click();">Input Widget Files here</button></li>
+		<li>Wait until this download button becomes clickable, and then click it! <br /><button id="blob" disabled="true">Download converted widget files</button></li>
+		<li>You can now unzip the output file and use it as an <a href="https://forums.slime2.stream/resources/widget-setup.3/">OBS browser source</a>!!<br /><span class="whisper"><span class="bigtag">note</span>You will need a <a href="https://slime2.stream/account" target="_blank">slime2 account key from here</a>!</span></li>
+	</ol>
 
-<br /><hr />
-<h4>Processing Log</h4>
-<div id="log"></div>
-<br />
-<input type="file" id="settings" accept="text/*" autocomplete="off" />
-<input type="file" id="files" multiple accept=".css,.js,.html,.htm" autocomplete="off" />
-<script type="application/javascript" src="convert.js"></script>
+	<!-- Runtime logging section -->
+	<div id="output">
+		<hr />
+		<h4>Processing Log</h4>
+		<div id="log"></div>
+	</div>
+	
+	<!-- Input and scripts -->
+	<input type="file" id="settings" accept="text/*" autocomplete="off" />
+	<input type="file" id="files" multiple accept=".css,.js,.html,.htm" autocomplete="off" />
+	<script type="application/javascript" src="convert.js"></script>
 </body>
 </html>

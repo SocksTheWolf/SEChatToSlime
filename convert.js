@@ -156,7 +156,7 @@ function setup() {
 	for (input of inputFiles) {
 		if (input.type == "file")
 		{
-			console.log(`cleared ${input.id}`);
+			//console.log(`cleared ${input.id}`);
 			input.value = "";
 		}
 	}

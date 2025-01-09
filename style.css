@@ -1,0 +1,44 @@
+#intro {
+	margin-left: 5px;
+	line-height: 14px;
+}
+#log p {
+	margin-left: 10px;
+	max-width: 30%;
+}
+li {
+	line-height: 30px;
+	max-width: 50%;
+}
+#blob {
+	margin-left: 20px;
+}
+input[type="file"] {
+	display: none;
+}
+.whisper {
+	font-size: 14px;
+	padding-left: 50px;
+	color: DimGray;
+	text-align: center;
+	display: inline-block;
+}
+.bigtag {
+	font-weight: bold;
+	text-transform: uppercase;
+}
+.bigtag:after {
+	content: ": ";
+}
+.credit {
+	position: relative;
+	left: -15px;
+	top: -15px;
+}
+.error {
+	color: red;
+}
+.ready {
+	font-weight: bold;
+	font-size: 25px;
+}
