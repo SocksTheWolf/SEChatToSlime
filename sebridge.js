@@ -75,10 +75,10 @@ function seEventData(data, message, isAction) {
 	
 	this.msgId = data.id;
 	this.userId = data.userId;
-	this.tags = data.tags;
 	this.isAction = isAction;
 	if (message != null) {
 		this.text = message.text;
+		this.tags = message.tags;
 		// Attempt to create the emote parts
 		this.emotes = new Array();
 		for (const part of message.parts) {
@@ -116,8 +116,8 @@ function seBridgeEvent(data) {
 function seSettings() {
 	// Some old old systems in streamelements used to push channel usernames
 	// don't think these are really grabbable in slime2
-	this.channel = new Object();
-	this.channel.username = "";
+	this.channel = {"username":""};
+	this.currency = {"symbol":""};
 	
 	this.fieldData = seJsonConfig;
 }

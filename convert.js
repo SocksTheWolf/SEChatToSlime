@@ -77,7 +77,7 @@ function settingsLoad(filename, data) {
 function applySettings(data) {
 	let curData = data;
 	Object.entries(settings).forEach(([key, value]) => {
-		const re = new RegExp(String.raw`(?<![\$]){${key}}`, "gm");
+		const re = new RegExp(String.raw`(?<![\$])[{]+${key}[}]+`, "gm");
 		curData = curData.replace(re, value);
 	});
 	return curData;
