@@ -1,7 +1,50 @@
+const storageUUID = crypto.randomUUID();
 var SEBridge = `
-
 // https://docs.streamelements.com/overlays/custom-widget-events#message
 // https://docs.slime2.stream/twitch/message#actionmessage
+
+const SE_API = {
+	store: {
+		set: function(keyName, obj) {
+			if (obj === null)
+				slime2.storage.del(keyName);
+			else
+				slime2.storage.set(keyName, obj);
+		},
+		get: function(keyName) {
+			return slime2.storage.get(keyName);
+		}
+	},
+	cheerFilter: async function(msg) {
+		return new Promise((resolve, reject) => {
+			let ret = "";
+			if (typeof msg === 'string')
+				ret = msg.replace(/cheer[0-9]+/gm, "");
+			resolve(ret);
+		});
+	},
+	getOverlayStatus: function() {
+		const isOBS = (typeof(window.obsstudio) !== 'undefined');
+		return {"isEditorMode": isOBS, "muted": false};
+	},
+	resumeQueue: function() { },
+	sanitize: async function(msgObj) {
+		return new Promise((resolve, reject) => {
+			if (Object.hasOwn(msgObj, "message"))
+				resolve({"result": {"message": msgObj.message}, "skip": false});
+			else
+				reject();
+		});
+	},
+	counters: {
+		get: async function(counterName) {
+			return new Promise(async (resolve, reject) => {
+				const counterValue = await SE_API.store.get(counterName);
+				resolve({"counter": counterName, "value": counterValue});
+			});
+		}
+	}, 
+};
 
 function seEmotesData(emote) {
 	this.type = emote.source;
@@ -82,6 +125,7 @@ function seSettings() {
 // Call the slime 
 addEventListener("slime2:ready", () => {
   slime2.widget.loadPlatform("twitch");
+  slime2.storage.use("${storageUUID}");
  
   // connect to our bridge and refire as necessary
   slime2.onEvent(ev => {

@@ -1,8 +1,7 @@
 let settings = null;
 let output = new JSZip();
 const PROJECT_FILES_NEEDED = 5;
-const HTMLBase = `
-<!doctype html>
+const HTMLBase = `<!doctype html>
 <html lang="en">
   <head>
     <!-- JQuery -->
@@ -29,10 +28,11 @@ const HTMLBase = `
   <body>
     <main id="slime2-root"></main>
 	{SEHTML}
-	<!-- widget JS/CSS -->
+	<!-- Bridge Code -->
 	<script src="seconfig.js"></script>
 	<script src="sebridge.js"></script>
-        <script src="streamelements.js"></script>
+	<!-- widget JS -->
+	<script src="streamelements.js"></script>
   </body>
  
   <template id="message-template">
