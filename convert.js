@@ -70,7 +70,7 @@ function settingsLoad(filename, data) {
 		
 		pushToLog("Settings parsed and ready");
 	} else {
-		pushToLog("ERROR: Settings file is malformed, and cannot be used, please make sure you copy the DATA section from the StreamElements widget editor exactly!");
+		pushToLog("<b>ERROR</b>: Settings file is malformed, and cannot be used, please make sure you copy the DATA section from the StreamElements widget editor exactly!");
 	}
 }
 
