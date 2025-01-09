@@ -1,5 +1,5 @@
-var settings = null;
-var output = new JSZip();
+let settings = null;
+let output = new JSZip();
 const PROJECT_FILES_NEEDED = 5;
 const HTMLBase = `
 <!doctype html>
@@ -12,15 +12,15 @@ const HTMLBase = `
       crossorigin="anonymous"
     ></script>
 	
-	<!-- Slime -->
-	<script
+    <!-- Slime -->
+    <script
       type="module"
       crossorigin
       src="https://cdn.jsdelivr.net/gh/zaytri/slime2@latest/release/slime2.js"
     ></script>
 	
-	<!-- CSS -->
-	<link href="streamelements.css" rel="stylesheet" />
+    <!-- CSS -->
+    <link href="streamelements.css" rel="stylesheet" />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/gh/zaytri/slime2@latest/release/slime2.css" />
@@ -32,7 +32,7 @@ const HTMLBase = `
 	<!-- widget JS/CSS -->
 	<script src="seconfig.js"></script>
 	<script src="sebridge.js"></script>
-    <script src="streamelements.js"></script>
+        <script src="streamelements.js"></script>
   </body>
  
   <template id="message-template">
@@ -64,6 +64,8 @@ function settingsLoad(filename, data) {
 		setButtonDisable("settingsBtn", true);
 		
 		pushToLog("Settings parsed and ready");
+	} else {
+		pushToLog("ERROR: Settings file is malformed, and cannot be used, please make sure you copy the DATA section from the StreamElements widget editor exactly!");
 	}
 }
 
@@ -113,8 +115,8 @@ function handleTranslation(fileName, fileInternals) {
 
 function hookUpDownload() {
 	document.getElementById("blob").addEventListener("click", function () {
-		output.generateAsync({type:"blob"}).then(function (blob) { // 1) generate the zip file
-			saveAs(blob, "conversion.zip");                        // 2) trigger the download
+		output.generateAsync({type:"blob"}).then(function (blob) {
+			saveAs(blob, "conversion.zip");
 		}, function (err) {
 			pushToLog("Download error! "+err);
 		});
