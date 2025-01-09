@@ -14,6 +14,7 @@ Output zip file is widget.html, use that as your browser source (see slime2 OBS 
 * Provides an zip folder with your converted widget code
 * Most (if not all) results require any further code modifications
 * Directly injects existing StreamElements user settings into the widgets
+* Support for pronouns if your widget supports it too!
 * Free
 
 ## To use
