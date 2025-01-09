@@ -95,17 +95,18 @@ function readFileAndParse(element, callback) {
 }
 
 function handleTranslation(fileName, fileInternals) {
+	const lowerFileName = fileName.toLowerCase();
 	let fileData = fileInternals;
 	// inject additional data to the html so that it handles everything correctly
-	if (fileName.includes(".html", "ig")) {
+	if (lowerFileName.includes(".htm")) {
 		fileData = HTMLBase.replace("{SEHTML}", fileInternals);
 		fileName = "widget.html";
 		pushToLog("HTML Widget finished");
 	} else {
 		// remap paths
-		if (fileName.includes(".css"))
+		if (lowerFileName.includes(".css"))
 			fileName = "streamelements.css";
-		else if (fileName.includes(".js"))
+		else if (lowerFileName.includes(".js"))
 			fileName = "streamelements.js";
 		pushToLog(`prepared ${fileName}!`);
 	}
