@@ -116,7 +116,7 @@ function seBridgeEvent(data) {
 function seSettings() {
 	// Some old old systems in streamelements used to push channel usernames
 	// don't think these are really grabbable in slime2
-	this.channel = {"username":""};
+	this.channel = {"username":"", "id":0};
 	this.currency = {"symbol":""};
 	
 	this.fieldData = seJsonConfig;
