@@ -52,7 +52,12 @@ function pushToLog(line) {
 }
 
 function settingsLoad(filename, data) {
-	let parsedData = JSON.parse(data);
+	let parsedData = null;
+	try {
+		parsedData = JSON.parse(data);
+	} catch (ex) {
+		console.error(ex);
+	}
 	if (parsedData != null) {
 		settings = parsedData;
 		// Take the configs passed in and recreate a file for them
