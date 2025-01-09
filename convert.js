@@ -11,15 +11,16 @@ const HTMLBase = `<!doctype html>
       crossorigin="anonymous"
     ></script>
 	
-    <!-- Slime -->
+    <!-- Slime JS -->
     <script
       type="module"
       crossorigin
       src="https://cdn.jsdelivr.net/gh/zaytri/slime2@latest/release/slime2.js"
     ></script>
 	
-    <!-- CSS -->
+    <!-- Original SE CSS -->
     <link href="streamelements.css" rel="stylesheet" />
+	<!-- Slime CSS -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/gh/zaytri/slime2@latest/release/slime2.css" />
@@ -27,14 +28,21 @@ const HTMLBase = `<!doctype html>
  
   <body>
     <main id="slime2-root"></main>
+	<!-- Original SE Widget HTML Start -->
+	<!-- NOTE: If something seems off or goes wrong, copy all code from this section and put it after "Bridge JS Code End". -->
 	{SEHTML}
-	<!-- Bridge Code -->
+	<!-- Original SE Widget HTML End -->
+	
+	<!-- Bridge JS Code Start -->
 	<script src="seconfig.js"></script>
 	<script src="sebridge.js"></script>
-	<!-- widget JS -->
+	<!-- Bridge JS Code End -->
+	
+	<!-- Original SE Widget JS -->
 	<script src="streamelements.js"></script>
   </body>
  
+  <!-- The code below is not actually used -->
   <template id="message-template">
     <div class="message"></div>
   </template>
@@ -49,6 +57,10 @@ function pushToLog(line) {
 	const newLog = document.createElement("p");
 	newLog.innerHTML = line;
 	document.getElementById("log").appendChild(newLog);
+}
+
+function pushErrorToLog(line) {
+	pushToLog("<span class='big error'>ERROR</span>: "+line);
 }
 
 function settingsLoad(filename, data) {
@@ -68,9 +80,9 @@ function settingsLoad(filename, data) {
 		setButtonDisable("filesBtn", false);
 		setButtonDisable("settingsBtn", true);
 		
-		pushToLog("Settings parsed and ready");
+		pushToLog("<span class='big'>Settings parsed! Ready for widget files</span>");
 	} else {
-		pushToLog("<b>ERROR</b>: Settings file is malformed, and cannot be used, please make sure you copy the DATA section from the StreamElements widget editor exactly!");
+		pushErrorToLog("Settings file is malformed, and cannot be used, please make sure you copy the DATA section from the StreamElements widget editor exactly!");
 	}
 }
 
@@ -86,6 +98,12 @@ function applySettings(data) {
 function readFileAndParse(element, callback) {
 	const elementHandle = document.getElementById(element);
 	elementHandle.addEventListener("change", (event) => {
+		// Shouldn't be possible, but make sure we have files.
+		if (elementHandle.files.length == 0) {
+			pushErrorToLog("No files selected!");
+			return;
+		}
+		// All files that we do get, try to process them...
 		for (const curFile of elementHandle.files) {
 			const reader = new FileReader();
 			reader.onload = (e) => callback(curFile.name, e.target.result);
@@ -95,46 +113,75 @@ function readFileAndParse(element, callback) {
 }
 
 function handleTranslation(fileName, fileInternals) {
+	let outFileName = fileName;
 	const lowerFileName = fileName.toLowerCase();
 	let fileData = fileInternals;
+	
+	// Check if the internals are empty, this is a sign it didn't read properly or is an empty file.
+	if (fileData.length == 0) {
+		pushErrorToLog(`File ${fileName} is an empty file, this is likely incorrect!`);
+		return;
+	}
 	// inject additional data to the html so that it handles everything correctly
 	if (lowerFileName.includes(".htm")) {
 		fileData = HTMLBase.replace("{SEHTML}", fileInternals);
-		fileName = "widget.html";
+		outFileName = "widget.html";
 		pushToLog("HTML Widget finished");
 	} else {
 		// remap paths
 		if (lowerFileName.includes(".css"))
-			fileName = "streamelements.css";
-		else if (lowerFileName.includes(".js"))
-			fileName = "streamelements.js";
+			outFileName = "streamelements.css";
+		else if (lowerFileName.includes(".js") && !lowerFileName.includes(".json"))
+			outFileName = "streamelements.js";
+		else {
+			pushErrorToLog(`Skipping unrecognized file ${fileName}`);
+			return;
+		}
 		pushToLog(`prepared ${fileName}!`);
 	}
-	console.log(fileData);
-	output.file(fileName, applySettings(fileData));
 	
+	// Convert the file and add it to the zip output.
+	output.file(outFileName, applySettings(fileData));
+	
+	// Enable the download button
 	if (Object.keys(output.files).length >= PROJECT_FILES_NEEDED) {
 		setButtonDisable("blob", false);
-		pushToLog("<b>Download ready!</b>");
+		pushToLog("<span class='big ready'>Download ready!</span>");
 	}
 }
 
-function hookUpDownload() {
+function setup() {
+	// Make sure all file inputs are cleared upon start.
+	const inputFiles = document.getElementsByTagName("input");
+	for (input of inputFiles) {
+		if (input.type == "file")
+		{
+			console.log(`cleared ${input.id}`);
+			input.value = "";
+		}
+	}
+	
+	// reset all the buttons
+	setButtonDisable("blob", true);
+	setButtonDisable("filesBtn", true);
+	setButtonDisable("settingsBtn", false);
+	
+	// Add the SE Bridge files to the output
+	output.file("sebridge.js", SEBridge);
+	pushToLog("Added SE Bridge Library");
+	
+	// Call all the starting functions.
+	readFileAndParse("settings", settingsLoad);
+	readFileAndParse("files", handleTranslation);
+	
+	// Hook up the download button.
 	document.getElementById("blob").addEventListener("click", function () {
 		output.generateAsync({type:"blob"}).then(function (blob) {
 			saveAs(blob, "conversion.zip");
 		}, function (err) {
-			pushToLog("Download error! "+err);
+			pushErrorToLog("Download error! "+err);
 		});
 	});
 }
 
-function addSEBridgeFile() {
-	output.file("sebridge.js", SEBridge);
-	pushToLog("Added SE Bridge Library");	
-}
-
-addSEBridgeFile();
-readFileAndParse("settings", settingsLoad);
-readFileAndParse("files", handleTranslation);
-hookUpDownload();
+setup();

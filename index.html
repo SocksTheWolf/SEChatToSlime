@@ -5,6 +5,7 @@
 <meta name="author" content="SocksTheWolf" />
 <meta name="description" content="A StreamElements chat widget converter script for streamers!" />
 <meta name="keywords" content="streamelements, slime2, chat widget, widget, chat, twitch, twitch chat, obs overlay" />
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
 <script src="jszip.min.js"></script>
 <script src="FileSaver.js"></script>
 <script src="sebridge.js"></script>
@@ -20,7 +21,7 @@ li {
 #blob {
 	margin-left: 20px;
 }
-#settings, #files {
+input[type="file"] {
 	display: none;
 }
 .small {
@@ -30,10 +31,19 @@ li {
 	text-align: center;
 	display: inline-block;
 }
+.big {
+	font-weight: bold;
+}
 .credit {
 	position: relative;
 	left: -15px;
 	top: -15px;
+}
+.error {
+	color: red;
+}
+.ready {
+	font-size: 25px;
 }
 </style>
 </head>
@@ -47,15 +57,15 @@ li {
 <li>Take the file you made from the DATA section and <button for="settings" id="settingsBtn" class="btn" onclick="document.getElementById('settings').click();">Upload the settings here</button></li>
 <li>Upload the files from the HTML, CSS, and JS sections <button for="files" disabled="true" id="filesBtn" class="btn" onclick="document.getElementById('files').click();">Input Widget Files here</button></li>
 <li>Wait until this download button becomes clickable, and then click it! <br /><button id="blob" disabled="true">Download converted widget files</button></li>
-<li>You can now unzip the output file and use it as a OBS browser source! <a href="https://forums.slime2.stream/resources/widget-setup.3/">See the OBS setup documentation here</a>!</li>
+<li>You can now unzip the output file and use it as a OBS browser source! <a href="https://forums.slime2.stream/resources/widget-setup.3/">See the slime2 OBS setup documentation here</a>!</li>
 </ol>
 
 <br /><hr />
 <h4>Processing Log</h4>
 <div id="log"></div>
 <br />
-<input type="file" id="settings" accept="text/*" />
-<input type="file" id="files" multiple accept="text/*" />
+<input type="file" id="settings" accept="text/*" autocomplete="off" />
+<input type="file" id="files" multiple accept=".css,.js,.html,.htm" autocomplete="off" />
 <script type="application/javascript" src="convert.js"></script>
 </body>
 </html>

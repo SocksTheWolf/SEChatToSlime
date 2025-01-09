@@ -53,10 +53,7 @@ function seEmotesData(emote) {
 	this.gif = false;
 	this.start = -1;
 	this.end = -1;
-	this.urls = new Object();
-	this.urls["1"] = emote["images"]["default"]["x1"];
-	this.urls["2"] = emote["images"]["default"]["x2"];
-	this.urls["4"] = emote["images"]["default"]["x4"];
+	this.urls = {"1": emote["images"]["default"]["x1"], "2": emote["images"]["default"]["x2"], "4": emote["images"]["default"]["x4"]};
 }
 
 function seEventData(data, message, isAction) {
@@ -98,7 +95,7 @@ function seBridgeEvent(data) {
 	if (data.type === "remove-message")
 		this.listener = "delete-message";
 	else if (data.type === "clear-messages") {
-		// Refresh page on clear command
+		// Refresh widget on clear command
 		document.location.reload();
 	}
 	else if (data.type === "remove-user")
@@ -109,8 +106,7 @@ function seBridgeEvent(data) {
 	}
 	else if (data.type === "reply" || data.type === "basic" || data.type === "announcement" || data.type === "highlight" || data.type === "resub" || data.type === "cheer" || data.type === "click")
 		this.listener = "message";
-	this.event = new Object();
-	this.event.data = new seEventData(data, data.message, isAction);
+	this.event = {"data": new seEventData(data, data.message, isAction)};
 }
 
 function seSettings() {
