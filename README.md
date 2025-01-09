@@ -37,13 +37,13 @@ If you want something in this section, you'll need to either have a widget that 
 
 * Partner Cheeremotes do not display the image reliably.
 * Displaying pronouns is supported by this tool, but unless your widget handles that data already, it won't display. SE never had this feature.
+* Clearing chat was never a function that SE supports, as such, the widget refreshes itself upon the clear chat event that slime2 sends.
 
 ### Limitations of this tool
 Most points in here are things I can fix in the future, I'll mention if I am planning on it.
 
 * Does not convert any StreamElements settings fields into setable slime2 settings components, but I doubt anyone needs this
 * You cannot save custom data using SE_API. This is something is planned to be fixed in the future.
-* Chat clear is handled pretty poorly. Deleting one message or many messages works, but entire chat clear reloads the widget. This will be fixed soon.
 * Sending a message via a SE widget will cause the widget to error, this is because this function is not dummied properly. It will be fixed in the future.
 
 ---
