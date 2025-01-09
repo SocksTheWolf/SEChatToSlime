@@ -24,15 +24,19 @@ li {
 input[type="file"] {
 	display: none;
 }
-.small {
+.whisper {
 	font-size: 14px;
 	padding-left: 50px;
 	color: DimGray;
 	text-align: center;
 	display: inline-block;
 }
-.big {
+.bigtag {
 	font-weight: bold;
+	text-transform: uppercase;
+}
+.bigtag:after {
+	content: ": ";
 }
 .credit {
 	position: relative;
@@ -43,6 +47,7 @@ input[type="file"] {
 	color: red;
 }
 .ready {
+	font-weight: bold;
 	font-size: 25px;
 }
 </style>
@@ -50,14 +55,14 @@ input[type="file"] {
 
 <body>
 <h2>StreamElements Chat Widget Converter</h2>
-<span class="small credit">By <a href="https://socksthewolf.com">SocksTheWolf</a> - <a href="https://twitch.tv/socksthewolf">Twitch</a> - <a href="https://github.com/SocksTheWolf/SEChatToSlime">GitHub Project</a></span>
+<span class="whisper credit">By <a href="https://socksthewolf.com">SocksTheWolf</a> - <a href="https://twitch.tv/socksthewolf">Twitch</a> - <a href="https://github.com/SocksTheWolf/SEChatToSlime">GitHub Project</a></span>
 <p>Follow the steps below and you'll be able to have your SE Chat Widget work with a <a href="https://slime2.stream/" target="_blank">slime2 instance</a> instead! No more StreamElements requirements!! Everything is processed locally on your computer, for safety!</p>
 <ol>
-<li>Go into StreamElements dashboard and download the "Data", "CSS", "JS" and "HTML" sections via the widget editor for your chat widget. Save each file with their appropriate file extension!<br /><span class="small"><b>NOTE:</b> the Data section can be saved as anything, everything else is their section names in lowercase (ex: code in the CSS section would be saved as <code>.css</code>)<br />If you need help with these steps, <a href="https://youtu.be/FTSqXM53kjM" target="_blank">a video tutorial is provided here</a>.</span></li>
+<li>Go into StreamElements dashboard and download the "Data", "CSS", "JS" and "HTML" sections via the widget editor for your chat widget. Save each file with their appropriate file extension!<br /><span class="whisper"><span class="bigtag">note</span>The Data section can be saved as anything, everything else is their section names in lowercase (ex: code in the CSS section would be saved as <code>.css</code>)<br />If you need help with these steps, <a href="https://youtu.be/FTSqXM53kjM" target="_blank">a video tutorial is provided here</a>.</span></li>
 <li>Take the file you made from the DATA section and <button for="settings" id="settingsBtn" class="btn" onclick="document.getElementById('settings').click();">Upload the settings here</button></li>
 <li>Upload the files from the HTML, CSS, and JS sections <button for="files" disabled="true" id="filesBtn" class="btn" onclick="document.getElementById('files').click();">Input Widget Files here</button></li>
 <li>Wait until this download button becomes clickable, and then click it! <br /><button id="blob" disabled="true">Download converted widget files</button></li>
-<li>You can now unzip the output file and use it as a OBS browser source! <a href="https://forums.slime2.stream/resources/widget-setup.3/">See the slime2 OBS setup documentation here</a>!</li>
+<li>You can now unzip the output file and use it as an <a href="https://forums.slime2.stream/resources/widget-setup.3/">OBS browser source</a>!!<br /><span class="whisper"><span class="bigtag">note</span>You will need a <a href="https://slime2.stream/account" target="_blank">slime2 account key from here</a>!</span></li>
 </ol>
 
 <br /><hr />

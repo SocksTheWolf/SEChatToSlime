@@ -60,7 +60,7 @@ function pushToLog(line) {
 }
 
 function pushErrorToLog(line) {
-	pushToLog("<span class='big error'>ERROR</span>: "+line);
+	pushToLog("<span class='bigtag error'>error</span> "+line);
 }
 
 function settingsLoad(filename, data) {
@@ -80,7 +80,7 @@ function settingsLoad(filename, data) {
 		setButtonDisable("filesBtn", false);
 		setButtonDisable("settingsBtn", true);
 		
-		pushToLog("<span class='big'>Settings parsed! Ready for widget files</span>");
+		pushToLog("Settings parsed! Ready for widget files");
 	} else {
 		pushErrorToLog("Settings file is malformed, and cannot be used, please make sure you copy the DATA section from the StreamElements widget editor exactly!");
 	}
@@ -146,7 +146,7 @@ function handleTranslation(fileName, fileInternals) {
 	// Enable the download button
 	if (Object.keys(output.files).length >= PROJECT_FILES_NEEDED) {
 		setButtonDisable("blob", false);
-		pushToLog("<span class='big ready'>Download ready!</span>");
+		pushToLog("<span class='ready'>Download ready!</span>");
 	}
 }
 
