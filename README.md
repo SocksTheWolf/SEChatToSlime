@@ -5,7 +5,7 @@ This project tries to simply convert existing StreamElements widget files for us
 ## Overview
 
 It's mostly just a glorified find/replace system + a function bridge file but otherwise should just work for the most part.
-Output zip file has everything necessary to get started with slime. The OBS widget is widget.html, use that as your browser source (see slime2 OBS settings [here](https://forums.slime2.stream/resources/widget-setup.3/)).
+Output zip file has everything necessary to get started with slime. The output OBS widget is `widget.html`, use that as your browser source (see slime2 OBS settings [here](https://forums.slime2.stream/resources/widget-setup.3/)).
 
 ### Features
 
@@ -31,12 +31,14 @@ A video version of the above can be found below:
 [![Fun Helping Guide](https://img.youtube.com/vi/FTSqXM53kjM/0.jpg)](https://youtu.be/FTSqXM53kjM)
 
 ## Caveats
+
 Due to this being a simple automation, there are some things that cannot be dynamically resolved.
 This isn't always because of this tool, but because one platform had features the other doesn't (or will not).
 
 As some have asked, this tool could be used for other SE widgets (technically not just chat), however, there are a few points to make note of...
 
 ### Limitations of slime2
+
 These are features missing in slime2, as such, any widgets that relied on this won't work properly.
 If you are converting a chat widget, you likely will not be using these anyways...
 
@@ -46,6 +48,7 @@ If you are converting a chat widget, you likely will not be using these anyways.
 * You cannot send messages to chat.
 
 ### Limitations of StreamElements
+
 Features that slime2 has but StreamElements never had functionality for.
 If you want something in this section, you'll need to either have a widget that had support for this functionality anyways, or make modifications yourself.
 
@@ -54,6 +57,7 @@ If you want something in this section, you'll need to either have a widget that 
 * Clearing chat was never a function that SE supports, as such, the widget refreshes itself upon the clear chat event that slime2 sends.
 
 ### Limitations of this tool
+
 Most points in here are things I can fix in the future, I'll mention if I am planning on it.
 
 * Does not convert any StreamElements settings fields into setable slime2 settings components, but I doubt anyone needs this.
