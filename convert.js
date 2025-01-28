@@ -27,7 +27,7 @@ const HTMLBase = `<!doctype html>
   </head>
  
   <body>
-    <main id="slime2-root"></main>
+    <slime2 id="slime2-root"></slime2>
 	<!-- Original SE Widget HTML Start -->
 	<!-- NOTE: If something seems off or goes wrong, copy all code from this section and put it after "Bridge JS Code End". -->
 	{SEHTML}
