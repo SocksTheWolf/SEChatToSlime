@@ -1,39 +1,39 @@
 #log p {
-	margin-left: 10px;
-	max-width: 30%;
+  margin-left: 10px;
+  max-width: 30%;
 }
 li {
-	max-width: 50%;
+  max-width: 50%;
 }
 #blob {
-	margin-left: 20px;
+  margin-left: 20px;
 }
 input[type="file"] {
-	display: none;
+  display: none;
 }
 .whisper {
-	font-size: 14px;
-	padding-left: 50px;
-	color: DimGray;
-	text-align: center;
-	display: inline-block;
+  font-size: 14px;
+  padding-left: 50px;
+  color: DimGray;
+  text-align: center;
+  display: inline-block;
 }
 .bigtag {
-	font-weight: bold;
-	text-transform: uppercase;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 .bigtag:after {
-	content: ": ";
+  content: ": ";
 }
 .credit {
-	position: relative;
-	left: -15px;
-	top: -15px;
+  position: relative;
+  left: -15px;
+  top: -15px;
 }
 .error {
-	color: red;
+  color: red;
 }
 .ready {
-	font-weight: bold;
-	font-size: 25px;
+  font-weight: bold;
+  font-size: 25px;
 }
