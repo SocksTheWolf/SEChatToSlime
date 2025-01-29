@@ -13,9 +13,7 @@ input[type="file"] {
 }
 .whisper {
   font-size: 14px;
-  padding-left: 50px;
-  color: DimGray;
-  text-align: center;
+  padding-left: 20px;
   display: inline-block;
 }
 .bigtag {
@@ -26,8 +24,10 @@ input[type="file"] {
   content: ": ";
 }
 .credit {
+  color: DimGray;
+  text-align: center;
   position: relative;
-  left: -15px;
+  left: -8px;
   top: -15px;
 }
 .error {
@@ -36,4 +36,8 @@ input[type="file"] {
 .ready {
   font-weight: bold;
   font-size: 25px;
+}
+header {
+  position: relative;
+  left: 15px;
 }
