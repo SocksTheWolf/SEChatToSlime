@@ -1,15 +1,29 @@
+/* Converter settings */
 let settings = null;
-let output = new JSZip();
 const PROJECT_FILES_NEEDED = 5;
+
+// Raw project files
+let rawProjectFiles = {
+  "js": null,
+  "html": null
+};
+
+/* Output Containers */
+let output = new JSZip();
+
+/* JQuery Checks */
+let hasParsedJS = false;
+let needsJQueryFull = false;
+const jQueryAnimateRegex = /\.(animate|fadeIn|fadeTo|fadeToggle|finish|slideDown|slideToggle|slideUp)\(/;
+
+/* Conversion strings */
+const jQueryFull = `<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>`;
+const jQuerySlim = `<script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>`;
 const HTMLBase = `<!doctype html>
 <html lang="en">
   <head>
   <!-- JQuery -->
-  <script
-    src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
-    integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8="
-    crossorigin="anonymous"
-  ></script>
+  {JQUERY}
   
   <!-- Slime JS -->
   <script
@@ -63,6 +77,17 @@ function pushErrorToLog(line) {
   pushToLog("<span class='bigtag error'>error</span> "+line);
 }
 
+function checkJQueryVersion(jsCode) {
+  hasParsedJS = true;
+  if (jsCode.match(jQueryAnimateRegex) !== null) {
+    needsJQueryFull = true;
+    pushToLog("Detected jQuery Full Library Needed, Including...");
+  } else {
+    needsJQueryFull = false;
+    pushToLog("Detected jQuery Slim Library Used, Including...");
+  }
+}
+
 function settingsLoad(filename, data) {
   let parsedData = null;
   try {
@@ -112,6 +137,13 @@ function readFileAndParse(element, callback) {
   });
 }
 
+function checkIfEnableDownload() {
+  if (Object.keys(output.files).length >= PROJECT_FILES_NEEDED) {
+    setButtonDisable("blob", false);
+    pushToLog("<span class='ready'>Download ready!</span>");
+  }
+}
+
 function handleTranslation(fileName, fileInternals) {
   let outFileName = fileName;
   const lowerFileName = fileName.toLowerCase();
@@ -122,18 +154,37 @@ function handleTranslation(fileName, fileInternals) {
     pushErrorToLog(`File ${fileName} is an empty file, this is likely incorrect!`);
     return;
   }
+
   // inject additional data to the html so that it handles everything correctly
   if (lowerFileName.includes(".htm")) {
-    fileData = HTMLBase.replace("{SEHTML}", fileInternals);
-    outFileName = "widget.html";
-    pushToLog("HTML Widget finished");
+    // Don't process anything that isn't already here
+    if (fileData === null)
+      return;
+
+    // Save the raw project file
+    rawProjectFiles["html"] = fileData;
+    // If we have the JS file, go ahead and process the correct output
+    if (rawProjectFiles["js"] !== null) {
+      outFileName = "widget.html";
+      fileData = HTMLBase.replace("{SEHTML}", fileInternals).replace("{JQUERY}", (needsJQueryFull) ? jQueryFull : jQuerySlim);
+      pushToLog("HTML Widget finished");
+    } else {
+      // Otherwise, wait until we see some js, it will call us back to add on in
+      return;
+    }
+
   } else {
     // remap paths
     if (lowerFileName.includes(".css"))
       outFileName = "streamelements.css";
-    else if (lowerFileName.includes(".js") && !lowerFileName.includes(".json"))
+    else if (lowerFileName.includes(".js") && !lowerFileName.includes(".json")) {
+      rawProjectFiles["js"] = fileData;
+      // Grab the JQuery Version
+      checkJQueryVersion(fileData);
+      // Update the HTML if we have it.
+      handleTranslation("widget.html", rawProjectFiles["html"]);
       outFileName = "streamelements.js";
-    else {
+    } else {
       pushErrorToLog(`Skipping unrecognized file ${fileName}`);
       return;
     }
@@ -144,10 +195,7 @@ function handleTranslation(fileName, fileInternals) {
   output.file(outFileName, applySettings(fileData));
   
   // Enable the download button
-  if (Object.keys(output.files).length >= PROJECT_FILES_NEEDED) {
-    setButtonDisable("blob", false);
-    pushToLog("<span class='ready'>Download ready!</span>");
-  }
+  checkIfEnableDownload();
 }
 
 function setup() {
@@ -155,10 +203,7 @@ function setup() {
   const inputFiles = document.getElementsByTagName("input");
   for (input of inputFiles) {
     if (input.type == "file")
-    {
-      //console.log(`cleared ${input.id}`);
       input.value = "";
-    }
   }
   
   // reset all the buttons
