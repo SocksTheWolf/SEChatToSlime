@@ -41,3 +41,6 @@ header {
   position: relative;
   left: 15px;
 }
+body {
+  overflow-x: hidden;
+}

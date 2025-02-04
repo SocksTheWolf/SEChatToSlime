@@ -14,7 +14,7 @@ let output = new JSZip();
 /* JQuery Checks */
 let hasParsedJS = false;
 let needsJQueryFull = false;
-const jQueryAnimateRegex = /\.(animate|fadeIn|fadeTo|fadeToggle|finish|slideDown|slideToggle|slideUp)\(/;
+const jQueryAnimateRegex = /[\'\"\.](animate|fadeIn|fadeTo|fadeToggle|finish|slideDown|slideToggle|slideUp)[\'\"\(]/;
 
 /* Conversion strings */
 const jQueryFull = `<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>`;
@@ -63,10 +63,36 @@ const HTMLBase = `<!doctype html>
 </html>
 `;
 
+/*** HTML STATE ***/
 function setButtonDisable(id, status) {
   document.getElementById(id).disabled = status;
 }
 
+function checkIfEnableDownload() {
+  if (Object.keys(output.files).length >= PROJECT_FILES_NEEDED) {
+    setButtonDisable("blob", false);
+    pushToLog("<span class='ready'>Download ready!</span>");
+  }
+}
+
+function readFileAndParse(element, callback) {
+  const elementHandle = document.getElementById(element);
+  elementHandle.addEventListener("change", (event) => {
+    // Shouldn't be possible, but make sure we have files.
+    if (elementHandle.files.length == 0) {
+      pushErrorToLog("No files selected!");
+      return;
+    }
+    // All files that we do get, try to process them...
+    for (const curFile of elementHandle.files) {
+      const reader = new FileReader();
+      reader.onload = (e) => callback(curFile.name, e.target.result);
+      reader.readAsText(curFile);
+    }
+  });
+}
+
+/*** LOGGING FUNCTIONS ***/
 function pushToLog(line) {
   const newLog = document.createElement("p");
   newLog.innerHTML = line;
@@ -77,6 +103,7 @@ function pushErrorToLog(line) {
   pushToLog("<span class='bigtag error'>error</span> "+line);
 }
 
+/*** STATE SETTING ***/
 function checkJQueryVersion(jsCode) {
   hasParsedJS = true;
   if (jsCode.match(jQueryAnimateRegex) !== null) {
@@ -111,6 +138,7 @@ function settingsLoad(filename, data) {
   }
 }
 
+/*** FILE MODIFICATIONS/BUNDLING ***/
 function applySettings(data) {
   let curData = data;
   Object.entries(settings).forEach(([key, value]) => {
@@ -120,34 +148,15 @@ function applySettings(data) {
   return curData;
 }
 
-function readFileAndParse(element, callback) {
-  const elementHandle = document.getElementById(element);
-  elementHandle.addEventListener("change", (event) => {
-    // Shouldn't be possible, but make sure we have files.
-    if (elementHandle.files.length == 0) {
-      pushErrorToLog("No files selected!");
-      return;
-    }
-    // All files that we do get, try to process them...
-    for (const curFile of elementHandle.files) {
-      const reader = new FileReader();
-      reader.onload = (e) => callback(curFile.name, e.target.result);
-      reader.readAsText(curFile);
-    }
-  });
-}
-
-function checkIfEnableDownload() {
-  if (Object.keys(output.files).length >= PROJECT_FILES_NEEDED) {
-    setButtonDisable("blob", false);
-    pushToLog("<span class='ready'>Download ready!</span>");
-  }
-}
-
 function handleTranslation(fileName, fileInternals) {
   let outFileName = fileName;
   const lowerFileName = fileName.toLowerCase();
   let fileData = fileInternals;
+
+  // Silently skip anything that's not a full file.
+  if (fileData === null) {
+    return;
+  }
   
   // Check if the internals are empty, this is a sign it didn't read properly or is an empty file.
   if (fileData.length == 0) {
@@ -157,10 +166,6 @@ function handleTranslation(fileName, fileInternals) {
 
   // inject additional data to the html so that it handles everything correctly
   if (lowerFileName.includes(".htm")) {
-    // Don't process anything that isn't already here
-    if (fileData === null)
-      return;
-
     // Save the raw project file
     rawProjectFiles["html"] = fileData;
     // If we have the JS file, go ahead and process the correct output
@@ -198,6 +203,7 @@ function handleTranslation(fileName, fileInternals) {
   checkIfEnableDownload();
 }
 
+/*** MAIN ***/
 function setup() {
   // Make sure all file inputs are cleared upon start.
   const inputFiles = document.getElementsByTagName("input");
