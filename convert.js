@@ -34,10 +34,6 @@ const HTMLBase = `<!doctype html>
   
   <!-- Original SE CSS -->
   <link href="streamelements.css" rel="stylesheet" />
-  <!-- Slime CSS -->
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/gh/zaytri/slime2@latest/release/slime2.css" />
   </head>
  
   <body>

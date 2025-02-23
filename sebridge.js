@@ -1,7 +1,15 @@
 const storageUUID = crypto.randomUUID();
 var SEBridge = `
-// https://docs.streamelements.com/overlays/custom-widget-events#message
-// https://docs.slime2.stream/twitch/message#actionmessage
+function IsInOBS() {
+	return (typeof(window.obsstudio) !== 'undefined');
+}
+
+if (!IsInOBS()) {
+  let slime2CSS = document.createElement("link");
+  slime2CSS.setAttribute("href", "https://cdn.jsdelivr.net/gh/zaytri/slime2@latest/release/slime2.css");
+  slime2CSS.setAttribute("rel", "stylesheet");
+  document.head.appendChild(slime2CSS);
+}
 
 const SE_API = {
   store: {
