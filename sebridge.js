@@ -65,8 +65,8 @@ function seEmotesData(emote) {
 }
 
 function seEventData(data, message, isAction) {
-  let user = message.user;
-  if (user != null) {
+  if (message.user !== undefined && message.user !== null) {
+	let user = message.user;
     this.nick = user.userName;
     this.displayName = user.displayName;
     this.pronouns = user.pronouns;
