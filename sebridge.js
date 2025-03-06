@@ -65,8 +65,9 @@ function seEmotesData(emote) {
 }
 
 function seEventData(data, message, isAction) {
-  if (message.user !== undefined && message.user !== null) {
-	let user = message.user;
+  const messageDefined = (message !== undefined);
+  if (messageDefined && message.user !== undefined && message.user != null) {
+	  let user = message.user;
     this.nick = user.userName;
     this.displayName = user.displayName;
     this.pronouns = user.pronouns;
@@ -81,7 +82,7 @@ function seEventData(data, message, isAction) {
   this.msgId = data.id;
   this.userId = data.userId;
   this.isAction = isAction;
-  if (message != null) {
+  if (messageDefined && message != null) {
     this.text = message.text;
     this.tags = message.tags;
     // Attempt to create the emote parts
