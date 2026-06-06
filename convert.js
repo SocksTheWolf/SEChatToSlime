@@ -36,7 +36,7 @@ const HTMLBase = `<!doctype html>
   <link href="streamelements.css" rel="stylesheet" />
   </head>
  
-  <body>
+  <body id="app">
   <slime2 id="slime2-root"></slime2>
   <!-- Original SE Widget HTML Start -->
   <!-- NOTE: If something seems off or goes wrong, copy all code from this section and put it after "Bridge JS Code End". -->
