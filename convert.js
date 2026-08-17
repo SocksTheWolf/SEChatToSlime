@@ -2,6 +2,12 @@
 let settings = null;
 const PROJECT_FILES_NEEDED = 5;
 
+const replaceSlimeCheckbox = document.getElementById("replaceSlime");
+
+replaceSlimeCheckbox.addEventListener("change", () => {
+  document.getElementById("slime2AuthKey").hidden = !replaceSlimeCheckbox.checked;
+});
+
 // Raw project files
 let rawProjectFiles = {
   "js": null,
@@ -19,39 +25,39 @@ const jQueryAnimateRegex = /[\'\"\.](animate|fadeIn|fadeTo|fadeToggle|finish|sli
 /* Conversion strings */
 const jQueryFull = `<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>`;
 const jQuerySlim = `<script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>`;
-const HTMLBase = `<!doctype html>
+const HTMLBase = (replaceSlime = false) => `<!doctype html>
 <html lang="en">
   <head>
   <!-- JQuery -->
   {JQUERY}
-  
+
   <!-- Slime JS -->
   <script
     type="module"
     crossorigin
-    src="https://cdn.jsdelivr.net/gh/zaytri/slime2@latest/release/slime2.js"
+    src="${replaceSlime ? "https://make.twitchauth.work/slime2/slime2.js" : "https://cdn.jsdelivr.net/gh/zaytri/slime2@latest/release/slime2.js"}"
   ></script>
-  
+
   <!-- Original SE CSS -->
   <link href="streamelements.css" rel="stylesheet" />
   </head>
- 
+
   <body id="app">
   <slime2 id="slime2-root"></slime2>
   <!-- Original SE Widget HTML Start -->
   <!-- NOTE: If something seems off or goes wrong, copy all code from this section and put it after "Bridge JS Code End". -->
   {SEHTML}
   <!-- Original SE Widget HTML End -->
-  
+
   <!-- Bridge JS Code Start -->
   <script src="seconfig.js"></script>
   <script src="sebridge.js"></script>
   <!-- Bridge JS Code End -->
-  
+
   <!-- Original SE Widget JS -->
   <script src="streamelements.js"></script>
   </body>
- 
+
   <!-- The code below is not actually used -->
   <template id="message-template">
   <div class="message"></div>
@@ -127,7 +133,7 @@ function settingsLoad(filename, data) {
     // Toggle button usage
     setButtonDisable("filesBtn", false);
     setButtonDisable("settingsBtn", true);
-    
+
     pushToLog("Settings parsed! Ready for widget files");
   } else {
     pushErrorToLog("Settings file is malformed, and cannot be used, please make sure you copy the DATA section from the StreamElements widget editor exactly!");
@@ -153,7 +159,7 @@ function handleTranslation(fileName, fileInternals) {
   if (fileData === null) {
     return;
   }
-  
+
   // Check if the internals are empty, this is a sign it didn't read properly or is an empty file.
   if (fileData.length == 0) {
     pushErrorToLog(`File ${fileName} is an empty file, this is likely incorrect!`);
@@ -167,7 +173,7 @@ function handleTranslation(fileName, fileInternals) {
     // If we have the JS file, go ahead and process the correct output
     if (rawProjectFiles["js"] !== null) {
       outFileName = "widget.html";
-      fileData = HTMLBase.replace("{SEHTML}", fileInternals).replace("{JQUERY}", (needsJQueryFull) ? jQueryFull : jQuerySlim);
+      fileData = HTMLBase(replaceSlimeCheckbox.checked).replace("{SEHTML}", fileInternals).replace("{JQUERY}", (needsJQueryFull) ? jQueryFull : jQuerySlim);
       pushToLog("HTML Widget finished");
     } else {
       // Otherwise, wait until we see some js, it will call us back to add on in
@@ -191,10 +197,10 @@ function handleTranslation(fileName, fileInternals) {
     }
     pushToLog(`prepared ${fileName}!`);
   }
-  
+
   // Convert the file and add it to the zip output.
   output.file(outFileName, applySettings(fileData));
-  
+
   // Enable the download button
   checkIfEnableDownload();
 }
@@ -202,27 +208,31 @@ function handleTranslation(fileName, fileInternals) {
 /*** MAIN ***/
 function setup() {
   // Make sure all file inputs are cleared upon start.
-  const inputFiles = document.getElementsByTagName("input");
+  const inputFiles = document.querySelectorAll("input");
   for (input of inputFiles) {
-    if (input.type == "file")
-      input.value = "";
+    input.value = "";
+    input.checked = false;
   }
-  
+
   // reset all the buttons
   setButtonDisable("blob", true);
   setButtonDisable("filesBtn", true);
   setButtonDisable("settingsBtn", false);
-  
+
   // Add the SE Bridge files to the output
-  output.file("sebridge.js", SEBridge);
+  output.file("sebridge.js", SEBridge());
   pushToLog("Added SE Bridge Library");
-  
+
   // Call all the starting functions.
   readFileAndParse("settings", settingsLoad);
   readFileAndParse("files", handleTranslation);
-  
+
   // Hook up the download button.
   document.getElementById("blob").addEventListener("click", function () {
+    if (replaceSlimeCheckbox.checked) {
+      pushToLog("Add Slime Auth Key");
+      output.file("SLIME2_TWITCH_KEY.js", `slime2.setKey('twitch', '${document.getElementById("slime2AuthKeyInput").value || "AUTH KEY GOES HERE"}')`);
+    }
     output.generateAsync({type:"blob"}).then(function (blob) {
       saveAs(blob, "conversion.zip");
     }, function (err) {

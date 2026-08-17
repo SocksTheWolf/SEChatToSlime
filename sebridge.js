@@ -1,5 +1,6 @@
 const storageUUID = crypto.randomUUID();
-var SEBridge = `
+
+const SEBridge = () => `
 function IsInOBS() {
 	return (typeof(window.obsstudio) !== 'undefined');
 }
