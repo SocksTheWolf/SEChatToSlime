@@ -28,7 +28,8 @@ function setup() {
 }
 
 document.getElementById("blob").addEventListener("click", function () {
-  saveAs(htmlData, outputName);
+  const blobber = new Blob([htmlData], {type: "text/html;charset=utf-8"});
+  saveAs(blobber, outputName);
 });
 
 setup();
