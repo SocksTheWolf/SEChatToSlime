@@ -40,23 +40,30 @@
         <hr />
         <!-- Steps -->
         <ol>
-          <li>Click the button and add HTML file<br />
+          <li><div role="group"><span>Click the button and add HTML file</span>
             <button for="files" id="filesBtn" class="btn outline"
-              onclick="document.getElementById('files').click();">Put HTML Widget here</button>
+              onclick="document.getElementById('files').click();">Put HTML Widget here</button></div>
           </li><br />
-          <li>Wait until this download button becomes clickable, and then click it! <br /><button id="blob"
-              disabled="true">Download updated widget file</button></li><br />
+
+          <li><div role="group"><span>Wait until this download button becomes clickable, and then click it!</span><button id="blob"
+              disabled="true">Download updated widget file</button></div>
           </li><br />
-          <li><br />
+
+          <li>
             Authenticate using <a target="_blank" href="https://make.twitchauth.work/login?app=27785495-cdf7-4567-9e61-68dd802b8f5b">this URL</a>.<br />
             This provides all the same permissions that Slime2 originally had, using a service I run.
           </li><br />
+
           <li>
             Put the value of the key you got here: <input id="authKey" type="password" />
           </li><br />
+
           <li>
-            <button id="getAuth" disabled="true">PRESS THIS BUTTON TO GET YOUR AUTH FILE</button>
+            <div role="group">
+            <span>PRESS THIS BUTTON TO GET YOUR AUTH FILE</span>
+            <button id="getAuth" disabled="true">GIMME</button></div>
           </li><br />
+
           <li>
             Overwrite all your original files with the new ones you got on this site.
             You will now have a chat widget again. <strong>YOU ARE DONE</strong>.
