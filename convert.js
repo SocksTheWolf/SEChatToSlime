@@ -6,6 +6,7 @@ const replaceSlimeCheckbox = document.getElementById("replaceSlime");
 
 replaceSlimeCheckbox.addEventListener("change", () => {
   document.getElementById("slime2AuthKey").hidden = !replaceSlimeCheckbox.checked;
+  document.getElementById("slime-auth").hidden = replaceSlimeCheckbox.checked;
 });
 
 // Raw project files
