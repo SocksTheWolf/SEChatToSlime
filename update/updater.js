@@ -10,6 +10,10 @@ const slime2NameCheck = /slime2\.(?:min\.)?js/gi;
 const newCode = `<script type="module" crossorigin src="https://make.twitchauth.work/slime2/slime2.js"></script>`;
 
 function handleWidgetChange(fileName, fileInternals) {
+  if (fileInternals.length < 10) {
+    alert("bro there's no way the file be that small, be srs dawg");
+    return;
+  }
   outputName = fileName;
   htmlData = fileInternals.replace(scriptFinder, function(match) {
     if (slime2NameCheck.test(match)) {
