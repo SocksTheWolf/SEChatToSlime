@@ -67,32 +67,11 @@ const HTMLBase = (replaceSlime = false) => `<!doctype html>
 `;
 
 /*** HTML STATE ***/
-function setButtonDisable(id, status) {
-  document.getElementById(id).disabled = status;
-}
-
 function checkIfEnableDownload() {
   if (Object.keys(output.files).length >= PROJECT_FILES_NEEDED) {
     setButtonDisable("blob", false);
     pushToLog("<span class='ready'>Download ready!</span>");
   }
-}
-
-function readFileAndParse(element, callback) {
-  const elementHandle = document.getElementById(element);
-  elementHandle.addEventListener("change", (event) => {
-    // Shouldn't be possible, but make sure we have files.
-    if (elementHandle.files.length == 0) {
-      pushErrorToLog("No files selected!");
-      return;
-    }
-    // All files that we do get, try to process them...
-    for (const curFile of elementHandle.files) {
-      const reader = new FileReader();
-      reader.onload = (e) => callback(curFile.name, e.target.result);
-      reader.readAsText(curFile);
-    }
-  });
 }
 
 /*** LOGGING FUNCTIONS ***/
@@ -208,12 +187,7 @@ function handleTranslation(fileName, fileInternals) {
 
 /*** MAIN ***/
 function setup() {
-  // Make sure all file inputs are cleared upon start.
-  const inputFiles = document.querySelectorAll("input");
-  for (input of inputFiles) {
-    input.value = "";
-    input.checked = false;
-  }
+  clearInput();
 
   // reset all the buttons
   setButtonDisable("blob", true);

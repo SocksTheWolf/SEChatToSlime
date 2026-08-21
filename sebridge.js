@@ -52,7 +52,7 @@ const SE_API = {
         resolve({"counter": counterName, "value": counterValue});
       });
     }
-  }, 
+  },
 };
 
 function seEmotesData(emote) {
@@ -79,7 +79,7 @@ function seEventData(data, message, isAction) {
       this.badges[index].id = this.badges[index].type;
     });
   }
-  
+
   this.msgId = data.id;
   this.userId = data.userId;
   this.isAction = isAction;
@@ -100,7 +100,7 @@ function seEventData(data, message, isAction) {
 function seBridgeEvent(data) {
   let isAction = false;
   this.listener = data.type;
-  
+
   // Handle message types and translations
   if (data.type === "remove-message")
     this.listener = "delete-message";
@@ -124,21 +124,21 @@ function seSettings() {
   // don't think these are really grabbable in slime2
   this.channel = {"username":"", "id":0};
   this.currency = {"symbol":""};
-  
+
   this.fieldData = seJsonConfig;
 }
 
-// Call the slime 
+// Call the slime
 addEventListener("slime2:ready", () => {
   slime2.widget.loadPlatform("twitch");
   slime2.storage.use("${storageUUID}");
- 
+
   // connect to our bridge and refire as necessary
   slime2.onEvent(ev => {
     const event = new CustomEvent("onEventReceived", { bubbles: true, cancelable: false, detail: new seBridgeEvent(ev)});
     window.dispatchEvent(event);
   });
-  
+
   // Fire the event for streamelement listeners on startup.
   const loadedEvent = new CustomEvent("onWidgetLoad", {bubbles: true, cancelable: false, detail: new seSettings()});
   window.dispatchEvent(loadedEvent);

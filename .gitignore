@@ -1,3 +1,5 @@
 
 *.png
 /test
+
+node_modules/

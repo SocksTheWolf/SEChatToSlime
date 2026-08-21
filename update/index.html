@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Slime2 Chat Widget Updater</title>
+  <meta name="author" content="SocksTheWolf" />
+  <meta name="description" content="Updates slime2 widgets to use slime2proxy" />
+  <meta name="keywords" content="slime2proxy, slime2, chat widget, widget, chat, twitch, twitch chat, obs overlay" />
+  <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <!-- Application Requirements and code -->
+  <script src="../js/FileSaver.js"></script>
+  <script src="../js/utils.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <link href="../style.css" rel="stylesheet" />
+</head>
+
+<body>
+  <header>
+    <h2>Slime2 Chat Widget Converter</h2>
+    <span class="whisper credit">By <a href="https://socksthewolf.com">SocksTheWolf</a> - <a
+        href="https://twitch.tv/socksthewolf">Twitch</a> -
+      <a href="https://github.com/SocksTheWolf/SEChatToSlime">GitHub Project</a> - <a
+        href="https://bsky.app/profile/socksthewolf.com">Found a bug? Send me a message!</a></span>
+    <br />
+    <a href='https://ko-fi.com/R6R7U22JM' target='_blank'>
+      <img height='36' style='padding-left:40px;border:0px;height:36px;'
+        src='https://storage.ko-fi.com/cdn/kofi5.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+  </header>
+  <main>
+    <article>
+      <section>
+        <!-- Introduction -->
+        <div id="intro">
+          <p>Yo put your file in and let it get baybladed back to you with the new Slime2Proxy service
+            powered by <a target="_blank" href="https://make.twitchauth.work">Make Twitch Auth Work</a></p>
+        </div>
+        <hr />
+        <!-- Steps -->
+        <ol>
+          <li>Drop your HTML File in here
+            <button for="files" id="filesBtn" class="btn outline"
+              onclick="document.getElementById('files').click();">Input Widget Files here</button>
+          </li><br />
+          <li>Wait until this download button becomes clickable, and then click it! <br /><button id="blob"
+              disabled="true">Download updated files</button></li><br />
+          </li>
+        </ol>
+
+        <!-- Input and scripts -->
+        <input type="file" id="files" accept=".html,.htm" autocomplete="off" />
+        <script type="application/javascript" src="updater.js"></script>
+      </section>
+    </article>
+  </main>
+</body>
+
+</html>
