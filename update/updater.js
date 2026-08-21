@@ -4,27 +4,27 @@ let htmlData = "";
 // ugly, evil but finds all script blocks
 const scriptFinder = /(<script[\s\S]+?src=["']?(https:\/\/[^\s]\/\.js["'])?[\s\S]*?><\/script>)/igsm;
 
+const slime2NameCheck = /slime2\.(?:min\.)?js/gi;
+
 // updated code block to replace
 const newCode = `<script type="module" crossorigin src="https://make.twitchauth.work/slime2/slime2.js"></script>`;
 
 function handleWidgetChange(fileName, fileInternals) {
   outputName = fileName;
   htmlData = fileInternals.replace(scriptFinder, function(match) {
-    console.log(match);
-    if (match.includes("slime2.js")) {
+    if (slime2NameCheck.test(match)) {
       return newCode;
     }
     return match;
   });
-  console.log("Finished widget change");
+  console.log("Finished widget change, ready for download");
   setButtonDisable("blob", false);
 }
 
 
 function setup() {
   clearInput();
-
-  readFileAndParse("filesBtn", handleWidgetChange);
+  readFileAndParse("files", handleWidgetChange);
 }
 
 document.getElementById("blob").addEventListener("click", function () {
