@@ -7,6 +7,8 @@ This project tries to simply convert existing StreamElements widget files for us
 It's mostly just a glorified find/replace system + a function bridge file but otherwise should just work for the most part.
 Output zip file has everything necessary to get started with slime. The output OBS widget is `widget.html`, use that as your browser source (see slime2 OBS settings [here](https://forums.slime2.stream/resources/widget-setup.3/)).
 
+This also handles updating existing slime2 widgets to slime2proxy [via this link](https://socksthewolf.github.io/SEChatToSlime/update/).
+
 ### Features
 
 * Translates SE Chat + Basic Widgets to be usable in a slime2 setup
