@@ -6,7 +6,7 @@ let htmlData = "";
 // ugly, evil but finds all script blocks
 const scriptFinder = /(<script[\s\S]+?src=["']?(https:\/\/[^\s]\/\.js["'])?[\s\S]*?><\/script>)/igsm;
 
-const slime2NameCheck = /slime2\.(?:min\.)?js/gi;
+const slime2NameCheck = /slime2\.(?:min\.)?js/i;
 
 // updated code block to replace
 const newCode = `<script type="module" crossorigin src="https://make.twitchauth.work/slime2/slime2.js"></script>`;
