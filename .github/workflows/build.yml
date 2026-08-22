@@ -2,6 +2,11 @@
 name: Build Loose Pages
 on:
   push:
+    paths-ignore:
+      - .github/**
+      - .git*
+      - README.md
+      - LICENSE
 
 permissions:
   actions: write
