@@ -3,3 +3,7 @@
 LICENSE
 README.md
 .github/**
+.git/**
+.wrangler/**
+test*.html
+SLIME2_TWITCH_KEY.js
