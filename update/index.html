@@ -30,6 +30,7 @@
         src='https://storage.ko-fi.com/cdn/kofi5.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
   </header>
   <main>
+    <noscript><h2>YOU MUST ENABLE JAVASCRIPT TO USE THIS TOOL</h2></noscript>
     <article>
       <section>
         <!-- Introduction -->
@@ -40,13 +41,19 @@
         <hr />
         <!-- Steps -->
         <ol>
-          <li><div role="group"><span>Click the button and add HTML file</span>
-            <button for="files" id="filesBtn" class="btn outline"
-              onclick="document.getElementById('files').click();">Put HTML Widget here</button></div>
+          <li>
+            <div role="group">
+              <span>Click the button and add HTML file</span>
+              <button for="files" id="filesBtn" class="btn outline"
+                onclick="document.getElementById('files').click();">Put HTML Widget here</button>
+            </div>
           </li><br />
 
-          <li><div role="group"><span>Wait until this download button becomes clickable, and then click it!</span><button id="blob"
-              disabled="true">Download updated widget file</button></div>
+          <li>
+            <div role="group">
+            <span>Wait until this download button becomes clickable, and then click it!</span>
+            <button id="blob">Download updated widget file</button>
+            </div>
           </li><br />
 
           <li>
@@ -55,13 +62,15 @@
           </li><br />
 
           <li>
-            Put the value of the key you got here: <input id="authKey" autocomplete="off" data-1p-ignore="true" data-bwignore="true" data-lpignore="true" data-protonpass-ignore="true" type="password" />
+            Put the value of the key you got here: <input id="authKey" autocomplete="off"
+            data-1p-ignore="true" data-bwignore="true" data-lpignore="true" data-protonpass-ignore="true" type="password" />
           </li><br />
 
           <li>
             <div role="group">
             <span>PRESS THIS BUTTON TO GET YOUR AUTH FILE</span>
-            <button id="getAuth" disabled="true">GIMME</button></div>
+            <button id="getAuth">GIMME</button>
+            </div>
           </li><br />
 
           <li>

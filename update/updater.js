@@ -27,18 +27,23 @@ function handleWidgetChange(fileName, fileInternals) {
   setButtonDisable("blob", false);
 }
 
-
 function setup() {
   clearInput();
+  setButtonDisable("getAuth", true);
+  setButtonDisable("blob", true);
   setButtonDisable("getAuth", true);
   readFileAndParse("files", handleWidgetChange);
 }
 
 authInput.addEventListener("change", () => {
-  setButtonDisable("getAuth", authInput.length > 0);
+  setButtonDisable("getAuth", (authInput.value.length == 0));
 });
 
 document.getElementById("getAuth").addEventListener("click", () => {
+  if (authInput.value.length == 0) {
+    alert("Key is missing!");
+    return;
+  }
   const authKeyValue = `slime2.setKey('twitch', '${authInput.value}')`;
   const authBlob = new Blob([authKeyValue], {type: "text/javascript"});
   saveAs(authBlob, "SLIME2_TWITCH_KEY.js");
