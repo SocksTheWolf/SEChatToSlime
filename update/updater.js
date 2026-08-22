@@ -26,6 +26,7 @@ function handleWidgetChange(fileName, fileInternals) {
   });
   if (!madeChange) {
     alert("slime2 code could not be found, your widget is missing a reference to slime2.js/min.js");
+    htmlData = "";
   } else {
     outputName = fileName;
     // yeah throw that right into the code block, woo
