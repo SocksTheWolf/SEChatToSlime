@@ -3,3 +3,4 @@ test*.html
 SLIME2_TWITCH_KEY.js
 node_modules/
 .wrangler/
+.git/
