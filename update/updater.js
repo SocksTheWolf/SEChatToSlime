@@ -16,7 +16,6 @@ function handleWidgetChange(fileName, fileInternals) {
     alert("bro there's no way the file be that small, be srs dawg");
     return;
   }
-  outputName = fileName;
   let madeChange = false;
   htmlData = fileInternals.replace(scriptFinder, function(match) {
     if (slime2NameCheck.test(match)) {
@@ -28,6 +27,9 @@ function handleWidgetChange(fileName, fileInternals) {
   if (!madeChange) {
     alert("slime2 code could not be found, your widget is missing a reference to slime2.js/min.js");
   } else {
+    outputName = fileName;
+    // yeah throw that right into the code block, woo
+    document.getElementById("origName").innerText = fileName;
     setButtonDisable("blob", false);
   }
 }
