@@ -3,8 +3,9 @@ name: Build Loose Pages
 on:
   push:
     paths-ignore:
-      - .github/**
-      - .git*
+      - .github/dependabot.yml
+      - .gitignore
+      - .gitattributes
       - README.md
       - LICENSE
 
@@ -31,5 +32,5 @@ jobs:
           path: "."
 
       - name: Deploy Pages
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
 
