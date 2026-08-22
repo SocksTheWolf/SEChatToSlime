@@ -17,14 +17,19 @@ function handleWidgetChange(fileName, fileInternals) {
     return;
   }
   outputName = fileName;
+  let madeChange = false;
   htmlData = fileInternals.replace(scriptFinder, function(match) {
     if (slime2NameCheck.test(match)) {
+      madeChange = true;
       return newCode;
     }
     return match;
   });
-  console.log("Finished widget change, ready for download");
-  setButtonDisable("blob", false);
+  if (!madeChange) {
+    alert("slime2 code could not be found, your widget is missing a reference to slime2.js/min.js");
+  } else {
+    setButtonDisable("blob", false);
+  }
 }
 
 function setup() {
