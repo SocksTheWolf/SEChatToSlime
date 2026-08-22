@@ -8,7 +8,10 @@ function clearInput() {
 }
 
 function setButtonDisable(id, status) {
-  document.getElementById(id).setAttribute("disabled", status);
+  if (status)
+    document.getElementById(id).setAttribute("disabled", true);
+  else
+    document.getElementById(id).removeAttribute("disabled");
 }
 
 function readFileAndParse(element, callback) {
