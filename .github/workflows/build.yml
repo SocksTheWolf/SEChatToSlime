@@ -3,7 +3,13 @@ name: Build Loose Pages
 on:
   push:
 
+permissions:
+  actions: write
+
 jobs:
+  clean:
+    uses: socksthewolf/workflows/.github/workflows/clean_actions.yml@main
+
   build:
     permissions:
       pages: write
