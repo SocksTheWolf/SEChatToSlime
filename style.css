@@ -11,6 +11,9 @@ li {
 input[type="file"] {
   display: none;
 }
+[role="group"] {
+  vertical-align: unset !important;
+}
 .whisper {
   font-size: 14px;
   padding-left: 20px;
