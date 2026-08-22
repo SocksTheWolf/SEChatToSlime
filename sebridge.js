@@ -114,8 +114,12 @@ function seBridgeEvent(data) {
     this.listener = "message";
     isAction = true;
   }
-  else if (data.type === "reply" || data.type === "basic" || data.type === "announcement" || data.type === "highlight" || data.type === "resub" || data.type === "cheer" || data.type === "click")
-    this.listener = "message";
+  else if (data.type === "reply" || data.type === "basic" ||
+    data.type === "announcement" ||
+    data.type === "highlight" || data.type === "resub" ||
+    data.type === "cheer" || data.type === "click") {
+      this.listener = "message";
+  }
   this.event = {"data": new seEventData(data, data.message, isAction)};
 }
 

@@ -24,8 +24,10 @@ let needsJQueryFull = false;
 const jQueryAnimateRegex = /[\'\"\.](animate|fadeIn|fadeTo|fadeToggle|finish|slideDown|slideToggle|slideUp)[\'\"\(]/;
 
 /* Conversion strings */
-const jQueryFull = `<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>`;
-const jQuerySlim = `<script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>`;
+const jQueryFull = `<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>`;
+const jQuerySlim = `<script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
+  integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>`;
 const HTMLBase = (replaceSlime = false) => `<!doctype html>
 <html lang="en">
   <head>
@@ -36,7 +38,9 @@ const HTMLBase = (replaceSlime = false) => `<!doctype html>
   <script
     type="module"
     crossorigin
-    src="${replaceSlime ? "https://make.twitchauth.work/slime2/slime2.js" : "https://cdn.jsdelivr.net/gh/zaytri/slime2@latest/release/slime2.js"}"
+    src="${replaceSlime ?
+      "https://make.twitchauth.work/slime2/slime2.js" :
+      "https://cdn.jsdelivr.net/gh/zaytri/slime2@latest/release/slime2.js"}"
   ></script>
 
   <!-- Original SE CSS -->
@@ -116,7 +120,7 @@ function settingsLoad(filename, data) {
 
     pushToLog("Settings parsed! Ready for widget files");
   } else {
-    pushErrorToLog("Settings file is malformed, and cannot be used, please make sure you copy the DATA section from the StreamElements widget editor exactly!");
+    pushErrorToLog("Settings file is malformed! Make sure you copy the DATA section from the StreamElements widget editor exactly!");
   }
 }
 
@@ -153,7 +157,9 @@ function handleTranslation(fileName, fileInternals) {
     // If we have the JS file, go ahead and process the correct output
     if (rawProjectFiles["js"] !== null) {
       outFileName = "widget.html";
-      fileData = HTMLBase(replaceSlimeCheckbox.checked).replace("{SEHTML}", fileInternals).replace("{JQUERY}", (needsJQueryFull) ? jQueryFull : jQuerySlim);
+      fileData = HTMLBase(replaceSlimeCheckbox.checked)
+        .replace("{SEHTML}", fileInternals)
+        .replace("{JQUERY}", (needsJQueryFull) ? jQueryFull : jQuerySlim);
       pushToLog("HTML Widget finished");
     } else {
       // Otherwise, wait until we see some js, it will call us back to add on in
@@ -205,8 +211,9 @@ function setup() {
   // Hook up the download button.
   document.getElementById("blob").addEventListener("click", function () {
     if (replaceSlimeCheckbox.checked) {
-      pushToLog("Add Slime Auth Key");
-      output.file("SLIME2_TWITCH_KEY.js", `slime2.setKey('twitch', '${document.getElementById("slime2AuthKeyInput").value || "AUTH KEY GOES HERE"}')`);
+      pushToLog("Adding BONUS Slime Auth Key");
+      output.file("SLIME2_TWITCH_KEY.js",
+        `slime2.setKey('twitch', '${document.getElementById("slime2AuthKeyInput").value || "AUTH KEY GOES HERE"}')`);
     }
     output.generateAsync({type:"blob"}).then(function (blob) {
       saveAs(blob, "conversion.zip");
